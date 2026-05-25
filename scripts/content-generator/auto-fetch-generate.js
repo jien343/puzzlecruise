@@ -48,13 +48,21 @@ async function generateAIContent(rawData, dateString) {
         throw new Error("Invalid raw data structure from NYT");
     }
 
-    const systemPrompt = `Act as a snarky but extremely helpful gaming KOL. Convert the raw answers for the daily NYT Connections puzzle into our custom "Three-Stage Progressive Hint" HTML structure.
-Tone: Conversational, slightly sarcastic about the puzzle setter's difficulty choices, but very encouraging to the player.
-Do not spoil the puzzle immediately. Provide hints in 3 exact stages for each of the 4 colors (Yellow, Green, Blue, Purple).
+    const systemPrompt = `You are an expert gaming journalist and SEO content writer. Your task is to write a highly engaging, long-form blog post (at least 400-500 words) about today's NYT Connections puzzle. 
+This content must pass Google's Helpful Content Update and get approved for AdSense, so it must be substantial, original, and helpful.
 
-Stage 1 (Category Hint): A vague hint about what the category represents.
-Stage 2 (Synonym/Example Hint): Give the starting letter of one word, or a strong synonym for one of the words.
-Stage 3 (Final Answer): The exact category name and the 4 words.
+IMPORTANT INSTRUCTION: Your ENTIRE output MUST be strictly in English. Do NOT output any Chinese text whatsoever. 
+
+Structure your response EXACTLY as follows in Markdown (mixed with our custom HTML for hints):
+
+1. **Introduction (150+ words):** Write a captivating intro about today's Connections puzzle. Discuss the overall difficulty, mention the date, and talk about any tricky words or overlaps without spoiling the actual categories. Use SEO keywords naturally: "NYT Connections hints today", "puzzle answers", "strategy".
+2. **Strategy Overview (100+ words):** Give general advice for today's board. For example, "Watch out for verbs that look like nouns," or "There's a sneaky crossover between color words and fruits."
+3. **Progressive Hints Section:** Introduce the hints. Then, output the following EXACT HTML structure for each of the 4 colors (Yellow, Green, Blue, Purple). 
+
+For the hints, follow this logic:
+- Stage 1 (Category Hint): A vague hint about what the category represents.
+- Stage 2 (Synonym/Example Hint): Give the starting letter of one word, or a strong synonym for one of the words.
+- Stage 3 (Final Answer): The exact category name and the 4 words.
 
 Use EXACTLY this HTML format for EACH color (change background colors appropriately: Yellow: bg-yellow-400, Green: bg-green-400, Blue: bg-blue-400, Purple: bg-purple-400):
 
@@ -85,7 +93,9 @@ Use EXACTLY this HTML format for EACH color (change background colors appropriat
     </div>
 </details>
 
-IMPORTANT INSTRUCTION: Your ENTIRE output MUST be strictly in English. Do NOT output any Chinese text whatsoever. Generate ONLY the HTML body content. No extra explanations.`;
+4. **Conclusion (50+ words):** A friendly wrap-up asking the reader how they did, encouraging them to keep their streak alive, and reminding them to bookmark PuzzleCruise for tomorrow.
+
+Do not output code blocks (\`\`\`) around the HTML. Just output the raw Markdown and HTML.`;
 
     const response = await openai.chat.completions.create({
         model: "gpt-4o-mini", // Cost effective model
