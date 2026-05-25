@@ -41,14 +41,20 @@ const latestPip = sortedPips[0];
                 </div>
                 
                 {latestConnection ? (
-                    <div class="prose prose-invert max-w-none">
-                        <div class="bg-gray-800/40 p-4 rounded-md mb-6 border border-gray-700 flex justify-between items-center">
-                            <p class="text-sm text-gray-300 font-medium">Latest: <span class="text-white">{latestConnection.data.date.toISOString().split('T')[0]}</span></p>
-                            <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded font-bold uppercase tracking-wide">Live</span>
+                    <div class="flex flex-col h-full justify-between">
+                        <div>
+                            <div class="bg-gray-800/40 p-4 rounded-md mb-6 border border-gray-700 flex justify-between items-center">
+                                <p class="text-sm text-gray-300 font-medium">Latest: <span class="text-white">{latestConnection.data.date.toISOString().split('T')[0]}</span></p>
+                                <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded font-bold uppercase tracking-wide">Live</span>
+                            </div>
+                            <AdWrapper />
+                            <p class="text-gray-400 my-6">
+                                Today's puzzle has been solved! Click below to view the exclusive, spoiler-free progressive hints and strategy guide.
+                            </p>
                         </div>
-                        <AdWrapper />
-                        <!-- Render Content -->
-                        <div set:html={latestConnection.rendered?.html} />
+                        <a href={`/connections/${latestConnection.slug}`} class="block w-full text-center py-4 rounded-md font-bold text-white bg-orange-600 hover:bg-orange-500 transition-colors shadow-lg mt-4">
+                            View Today's Hints & Strategy 🚀
+                        </a>
                     </div>
                 ) : (
                     <div class="flex flex-col items-center justify-center py-12 text-gray-500 bg-gray-900/30 rounded-lg border border-dashed border-gray-700">
@@ -68,13 +74,19 @@ const latestPip = sortedPips[0];
                 </div>
                 
                 {latestPip ? (
-                    <div class="prose prose-invert max-w-none">
-                        <div class="bg-gray-800/40 p-4 rounded-md mb-6 border border-gray-700 flex justify-between items-center">
-                            <p class="text-sm text-gray-300 font-medium">Latest: <span class="text-white">{latestPip.data.date.toISOString().split('T')[0]}</span></p>
-                            <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded font-bold uppercase tracking-wide">Live</span>
+                    <div class="flex flex-col h-full justify-between">
+                        <div>
+                            <div class="bg-gray-800/40 p-4 rounded-md mb-6 border border-gray-700 flex justify-between items-center">
+                                <p class="text-sm text-gray-300 font-medium">Latest: <span class="text-white">{latestPip.data.date.toISOString().split('T')[0]}</span></p>
+                                <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded font-bold uppercase tracking-wide">Live</span>
+                            </div>
+                            <p class="text-gray-400 my-6">
+                                The domino layout for today's Pips has been analyzed. View the solution and step-by-step strategy.
+                            </p>
                         </div>
-                        <!-- Render Content -->
-                        <div set:html={latestPip.rendered?.html} />
+                        <a href={`/pips/${latestPip.slug}`} class="block w-full text-center py-4 rounded-md font-bold text-white bg-blue-600 hover:bg-blue-500 transition-colors shadow-lg mt-4">
+                            View Today's Solution 🚀
+                        </a>
                     </div>
                 ) : (
                     <div class="flex flex-col items-center justify-center py-12 text-gray-500 bg-gray-900/30 rounded-lg border border-dashed border-gray-700">
