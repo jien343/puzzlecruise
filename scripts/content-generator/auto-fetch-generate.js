@@ -54,7 +54,7 @@ IMPORTANT INSTRUCTION: Your ENTIRE output MUST be strictly in English. Do NOT ou
 
 ### The Persona
 - Tone: Conversational, slightly sarcastic about the puzzle setter's difficulty choices, but very encouraging to the player.
-- Goal: Do not spoil the puzzle immediately. Provide hints in 3 exact stages for each of the 4 colors.
+- Goal: Do not spoil the puzzle immediately. Provide hints in 3 exact stages for EACH OF THE 4 COLORS (Yellow, Green, Blue, Purple). You MUST output all 4 colors.
 
 ### The Stages (CRITICAL SEO REQUIREMENT)
 To ensure we have enough engaging text for SEO and AdSense, you MUST write exactly 4 full, descriptive sentences for EACH of the Stage 1 and Stage 2 hints. Do not just output one short sentence. Write a mini-paragraph.
@@ -127,6 +127,22 @@ async function main() {
         // 2. Generate Content via AI
         const htmlContent = await generateAIContent(rawData, dateString);
 
+        // Extract all 16 words and shuffle them
+        let allWords = [];
+        if (rawData && rawData.categories) {
+            rawData.categories.forEach(cat => {
+                cat.cards.forEach(card => {
+                    allWords.push(card.content);
+                });
+            });
+        }
+        // Shuffle the array
+        for (let i = allWords.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [allWords[i], allWords[j]] = [allWords[j], allWords[i]];
+        }
+        const scrambledWordsStr = allWords.join(', ');
+
         // 3. Assemble Markdown File
         const frontmatter = `---
 title: "NYT Connections Hints for ${dateString}"
@@ -135,6 +151,11 @@ game: "connections"
 ---
 
 Welcome to today's Connections hints! If you're stuck, use our progressive hints below. Don't scroll too fast!
+
+<div class="bg-gray-800/50 border border-gray-700 p-4 rounded-md mb-8">
+    <p class="text-sm text-gray-400 mb-2 font-semibold">For those checking to make sure you're on the right day, today's 16 words are:</p>
+    <p class="text-gray-200 font-mono text-sm leading-relaxed">${scrambledWordsStr}</p>
+</div>
 
 `;
         const fullContent = frontmatter + htmlContent;

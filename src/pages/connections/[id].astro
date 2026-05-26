@@ -7,13 +7,20 @@ import AdWrapper from '../../components/AdWrapper.astro';
 
 export async function getStaticPaths() {
     const entries = await getCollection('connections');
-    return entries.map(entry => ({
+    // Sort ascending by date to calculate prev/next logically
+    entries.sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+    
+    return entries.map((entry, index) => ({
         params: { id: entry.id },
-        props: { entry },
+        props: { 
+            entry,
+            prevEntry: index > 0 ? entries[index - 1] : null,
+            nextEntry: index < entries.length - 1 ? entries[index + 1] : null
+        },
     }));
 }
 
-const { entry } = Astro.props;
+const { entry, prevEntry, nextEntry } = Astro.props;
 const { Content } = await render(entry);
 
 // Build FAQ Schema dynamically from the title and date
@@ -40,8 +47,27 @@ const faqSchema = {
     <Header />
     
     <main class="flex-grow w-full max-w-4xl mx-auto px-4 py-8 space-y-6">
+        <!-- Breadcrumbs (Microdata for Google Rich Snippets) -->
+        <nav aria-label="Breadcrumb" class="mb-4 text-sm text-gray-500" itemscope itemtype="https://schema.org/BreadcrumbList">
+            <ol class="flex space-x-2">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="/" class="hover:text-gray-300 transition-colors"><span itemprop="name">Home</span></a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <span>/</span>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="/connections/" class="hover:text-gray-300 transition-colors"><span itemprop="name">Connections</span></a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <span>/</span>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+                    <span itemprop="name" class="text-gray-400">{entry.data.date.toISOString().split('T')[0]}</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
         <div class="border-b border-gray-800 pb-4">
-            <a href="/connections/" class="text-sm text-gray-500 hover:text-gray-300 mb-2 inline-block">&larr; Back to Archives</a>
             <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-3">{entry.data.title}</h1>
             <div class="flex justify-between items-center">
                 <p class="text-orange-400 font-semibold">{entry.data.date.toISOString().split('T')[0]}</p>
@@ -66,6 +92,26 @@ const faqSchema = {
         </article>
 
         <AdWrapper />
+
+        <!-- Pagination (Prev / Next) for SEO Internal Linking -->
+        <nav class="flex justify-between items-center pt-8 border-t border-gray-800 mt-12">
+            <div>
+                {prevEntry && (
+                    <a href={`/connections/${prevEntry.id}`} class="flex flex-col text-left group">
+                        <span class="text-xs text-gray-500 uppercase tracking-wider mb-1 group-hover:text-orange-500 transition-colors">Previous</span>
+                        <span class="text-lg font-bold text-gray-300 group-hover:text-white transition-colors">&larr; {prevEntry.data.date.toISOString().split('T')[0]}</span>
+                    </a>
+                )}
+            </div>
+            <div class="text-right">
+                {nextEntry && (
+                    <a href={`/connections/${nextEntry.id}`} class="flex flex-col text-right group">
+                        <span class="text-xs text-gray-500 uppercase tracking-wider mb-1 group-hover:text-orange-500 transition-colors">Next Day</span>
+                        <span class="text-lg font-bold text-gray-300 group-hover:text-white transition-colors">{nextEntry.data.date.toISOString().split('T')[0]} &rarr;</span>
+                    </a>
+                )}
+            </div>
+        </nav>
     </main>
 
     <Footer />

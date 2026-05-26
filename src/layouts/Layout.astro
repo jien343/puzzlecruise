@@ -19,6 +19,15 @@ const { title, description = "PuzzleCruise - Sail smoothly through daily hints w
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
         <SEO title={title} description={description} type={type} />
+        
+        <!-- Google Analytics (Placeholder) -->
+        <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-XXXXXXXXXX');
+        </script> -->
 	</head>
 	<body class="bg-[#0b0f19] text-[#e5e7eb] font-sans antialiased min-h-screen flex flex-col">
 		<slot />
