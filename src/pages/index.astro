@@ -41,20 +41,14 @@ const latestPip = sortedPips[0];
                 </div>
                 
                 {latestConnection ? (
-                    <div class="flex flex-col h-full justify-between">
-                        <div>
-                            <div class="bg-gray-800/40 p-4 rounded-md mb-6 border border-gray-700 flex justify-between items-center">
-                                <p class="text-sm text-gray-300 font-medium">Latest: <span class="text-white">{latestConnection.data.date.toISOString().split('T')[0]}</span></p>
-                                <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded font-bold uppercase tracking-wide">Live</span>
-                            </div>
-                            <AdWrapper />
-                            <p class="text-gray-400 my-6">
-                                Today's puzzle has been solved! Click below to view the exclusive, spoiler-free progressive hints and strategy guide.
-                            </p>
+                    <div class="prose prose-invert max-w-none">
+                        <div class="bg-gray-800/40 p-4 rounded-md mb-6 border border-gray-700 flex justify-between items-center">
+                            <p class="text-sm text-gray-300 font-medium">Latest: <span class="text-white">{latestConnection.data.date.toISOString().split('T')[0]}</span></p>
+                            <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded font-bold uppercase tracking-wide">Live</span>
                         </div>
-                        <a href={`/connections/${latestConnection.slug}`} class="block w-full text-center py-4 rounded-md font-bold text-white bg-orange-600 hover:bg-orange-500 transition-colors shadow-lg mt-4">
-                            View Today's Hints & Strategy 🚀
-                        </a>
+                        <AdWrapper />
+                        <!-- Render Content -->
+                        <div set:html={latestConnection.rendered?.html} />
                     </div>
                 ) : (
                     <div class="flex flex-col items-center justify-center py-12 text-gray-500 bg-gray-900/30 rounded-lg border border-dashed border-gray-700">
@@ -74,19 +68,13 @@ const latestPip = sortedPips[0];
                 </div>
                 
                 {latestPip ? (
-                    <div class="flex flex-col h-full justify-between">
-                        <div>
-                            <div class="bg-gray-800/40 p-4 rounded-md mb-6 border border-gray-700 flex justify-between items-center">
-                                <p class="text-sm text-gray-300 font-medium">Latest: <span class="text-white">{latestPip.data.date.toISOString().split('T')[0]}</span></p>
-                                <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded font-bold uppercase tracking-wide">Live</span>
-                            </div>
-                            <p class="text-gray-400 my-6">
-                                The domino layout for today's Pips has been analyzed. View the solution and step-by-step strategy.
-                            </p>
+                    <div class="prose prose-invert max-w-none">
+                        <div class="bg-gray-800/40 p-4 rounded-md mb-6 border border-gray-700 flex justify-between items-center">
+                            <p class="text-sm text-gray-300 font-medium">Latest: <span class="text-white">{latestPip.data.date.toISOString().split('T')[0]}</span></p>
+                            <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded font-bold uppercase tracking-wide">Live</span>
                         </div>
-                        <a href={`/pips/${latestPip.slug}`} class="block w-full text-center py-4 rounded-md font-bold text-white bg-blue-600 hover:bg-blue-500 transition-colors shadow-lg mt-4">
-                            View Today's Solution 🚀
-                        </a>
+                        <!-- Render Content -->
+                        <div set:html={latestPip.rendered?.html} />
                     </div>
                 ) : (
                     <div class="flex flex-col items-center justify-center py-12 text-gray-500 bg-gray-900/30 rounded-lg border border-dashed border-gray-700">
@@ -94,67 +82,6 @@ const latestPip = sortedPips[0];
                         <p class="italic">Check back later for today's Pips domino layouts.</p>
                     </div>
                 )}
-            </section>
-        </div>
-
-        <!-- Heavy SEO Content Sections (Anchors Domain Authority) -->
-        <div class="mt-20 space-y-16 border-t border-gray-800 pt-16">
-            <!-- Why Choose Us -->
-            <section class="max-w-4xl mx-auto space-y-6">
-                <h2 class="text-3xl font-bold text-gray-100">Why Use PuzzleCruise for NYT Connections Hints?</h2>
-                <p class="text-gray-400 leading-relaxed text-lg">
-                    If you are searching for <strong class="text-gray-300">NYT Connections hints today</strong>, you've likely found dozens of sites that immediately spoil the answers. At PuzzleCruise, we believe in preserving the thrill of the game. Our custom-built, <strong>progressive 3-stage hint system</strong> is designed to give you just enough of a nudge to solve the daily puzzle yourself without ruining the satisfaction of the "Aha!" moment.
-                </p>
-                <p class="text-gray-400 leading-relaxed text-lg">
-                    Whether you're stuck on a tricky Purple category or just need a gentle push for the Yellow group, our daily updated Connections hints are carefully crafted by puzzle experts to help you maintain your winning streak.
-                </p>
-            </section>
-
-            <!-- How to Play -->
-            <section class="max-w-4xl mx-auto space-y-6">
-                <h2 class="text-3xl font-bold text-gray-100">How to Play NYT Connections</h2>
-                <div class="bg-[#111827] border border-gray-800 rounded-xl p-8 space-y-4 shadow-lg">
-                    <p class="text-gray-400 leading-relaxed">
-                        The New York Times Connections puzzle challenges players to group 16 words into four categories of four words each. Each category shares a specific theme or connection.
-                    </p>
-                    <ul class="list-disc list-inside text-gray-400 space-y-2 ml-4">
-                        <li><strong class="text-yellow-400">Yellow Group:</strong> Typically the most straightforward category (e.g., "Types of Fruit").</li>
-                        <li><strong class="text-green-400">Green Group:</strong> Medium difficulty, often involving light wordplay or trivia.</li>
-                        <li><strong class="text-blue-400">Blue Group:</strong> Hard difficulty, usually involving cultural references, phrases, or specific associations.</li>
-                        <li><strong class="text-purple-400">Purple Group:</strong> The trickiest category. It often relies on intense wordplay, missing letters, or fill-in-the-blank patterns (e.g., "Words starting with body parts").</li>
-                    </ul>
-                    <p class="text-gray-400 leading-relaxed mt-4">
-                        You have exactly four mistakes to spare. Our <strong class="text-gray-300">Connections answers and strategies</strong> are updated daily to ensure you never waste a life on a deceptive crossover word!
-                    </p>
-                </div>
-            </section>
-
-            <!-- SEO FAQ Section for "People Also Ask" -->
-            <section class="max-w-4xl mx-auto space-y-8 pb-12">
-                <h2 class="text-3xl font-bold text-gray-100">Frequently Asked Questions</h2>
-                
-                <div class="space-y-6">
-                    <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
-                        <h3 class="text-xl font-bold text-gray-200 mb-2">What time does NYT Connections reset?</h3>
-                        <p class="text-gray-400 leading-relaxed">
-                            The New York Times Connections puzzle resets at exactly <strong>midnight local time</strong> every single day. This means players in regions like Australia and New Zealand gain access to the new puzzle before players in North America. We provide daily hints ahead of time so you're always prepared.
-                        </p>
-                    </div>
-
-                    <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
-                        <h3 class="text-xl font-bold text-gray-200 mb-2">Are these hints generated by AI?</h3>
-                        <p class="text-gray-400 leading-relaxed">
-                            Our hints are curated and written in a conversational, snarky, yet highly helpful tone. We use a combination of expert puzzle analysis and advanced AI tooling to break down the daily categories into safe, progressive clues that guide you to the solution without giving it away instantly.
-                        </p>
-                    </div>
-
-                    <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
-                        <h3 class="text-xl font-bold text-gray-200 mb-2">Is today's NYT Connections hard?</h3>
-                        <p class="text-gray-400 leading-relaxed">
-                            Difficulty fluctuates daily. Often, the puzzle setter includes "crossover" words—words that could seemingly belong to two or three different categories. Our daily strategy guide specifically calls out these deceptive traps before you make your first move.
-                        </p>
-                    </div>
-                </div>
             </section>
         </div>
     </main>
