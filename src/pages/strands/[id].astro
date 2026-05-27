@@ -1,0 +1,153 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import AdWrapper from '../../components/AdWrapper.astro';
+
+export async function getStaticPaths() {
+    const entries = await getCollection('strands');
+    entries.sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+    
+    return entries.map((entry, index) => ({
+        params: { id: entry.id },
+        props: { 
+            entry,
+            prevEntry: index > 0 ? entries[index - 1] : null,
+            nextEntry: index < entries.length - 1 ? entries[index + 1] : null
+        },
+    }));
+}
+
+const { entry, prevEntry, nextEntry } = Astro.props;
+const { Content } = await render(entry);
+
+const dateStr = entry.data.date.toISOString().split('T')[0];
+const hints = entry.data.hints || [];
+
+// Build FAQ Schema dynamically
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": `What are the Strands answers for ${dateStr}?`,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": hints.length > 0
+          ? `Today's Strands hints are: ${hints.map(h => `${h.level} — ${h.description}`).join('; ')}.`
+          : `We provide spoiler-free, gradual hints for today's Strands. Click into the page to reveal hints layer by layer!`
+      }
+    },
+    {
+      "@type": "Question",
+      "name": `What are the hints for Strands on ${dateStr}?`,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": `Use our progressive hints on PuzzleCruise. Start with the Easy Starting Coordinate, then move to harder hints. No unnecessary spoilers!`
+      }
+    }
+  ]
+};
+
+// Build dynamic SEO Meta Description that INCLUDES partial spoilers!
+let partialSpoilerDesc = `NYT Strands hints today (${dateStr}). `;
+if (hints.length > 0) {
+    partialSpoilerDesc += `${hints[0].level}: ${hints[0].description.slice(0, 50)}... `;
+}
+partialSpoilerDesc += `Click for full progressive hints and answers without spoiling your streak!`;
+---
+
+<Layout title={`NYT Strands Hints Today (${dateStr}) - PuzzleCruise`} description={partialSpoilerDesc} type="article">
+    <!-- Inject JSON-LD Schema for Google Rich Snippets -->
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+    
+    <Header />
+    
+    <main class="flex-grow w-full max-w-4xl mx-auto px-4 py-8 space-y-6">
+        <!-- Breadcrumbs -->
+        <nav aria-label="Breadcrumb" class="mb-4 text-sm text-gray-500" itemscope itemtype="https://schema.org/BreadcrumbList">
+            <ol class="flex space-x-2">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="/" class="hover:text-gray-300 transition-colors"><span itemprop="name">Home</span></a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <span>/</span>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="/strands/" class="hover:text-gray-300 transition-colors"><span itemprop="name">Strands</span></a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <span>/</span>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+                    <span itemprop="name" class="text-gray-400">{dateStr}</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <div class="border-b border-gray-800 pb-4">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-3">NYT Strands Hints Today ({dateStr})</h1>
+            <div class="flex justify-between items-center">
+                <p class="text-orange-400 font-semibold">{dateStr}</p>
+                <button onclick="navigator.clipboard.writeText(window.location.href); this.textContent = '✓ Copied!'; setTimeout(()=>this.textContent='Copy Link', 2000)" class="text-xs font-medium bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded transition-colors flex items-center gap-1.5 text-gray-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                    Copy Link
+                </button>
+            </div>
+        </div>
+
+        <!-- Editor's Note / KOL Persona -->
+        <div class="bg-blue-900/20 border border-blue-800/50 rounded-lg p-4">
+            <h3 class="text-blue-300 font-bold mb-2 text-sm uppercase tracking-wide">Editor's Note on Strands Today:</h3>
+            <p class="text-sm text-blue-100/70 italic">Looking for <strong>Strands hints today</strong>? The domino setter was feeling tricky... But don't worry, we've broken down our <strong>tips for Strands today</strong> into stages. Reveal these <strong>NYT Strands hints today</strong> slowly to save your streak!</p>
+        </div>
+
+        <AdWrapper />
+
+        <!-- Progressive Hints (the main content) -->
+        <article class="prose prose-invert max-w-none">
+            <Content />
+        </article>
+
+        <AdWrapper />
+
+        <!-- Pagination -->
+        <nav class="flex justify-between items-center pt-8 border-t border-gray-800 mt-12">
+            <div class="w-1/2 pr-4">
+                {prevEntry && (
+                    <a href={`/strands/${prevEntry.id}`} class="flex flex-col text-left group">
+                        <span class="text-xs text-gray-500 uppercase tracking-wider mb-1 group-hover:text-orange-500 transition-colors">Previous Day</span>
+                        <span class="text-md sm:text-lg font-bold text-gray-300 group-hover:text-white transition-colors truncate" title={prevEntry.data.title}>&larr; {prevEntry.data.title}</span>
+                    </a>
+                )}
+            </div>
+            <div class="w-1/2 pl-4 text-right">
+                {nextEntry && (
+                    <a href={`/strands/${nextEntry.id}`} class="flex flex-col text-right group items-end">
+                        <span class="text-xs text-gray-500 uppercase tracking-wider mb-1 group-hover:text-orange-500 transition-colors">Next Day</span>
+                        <span class="text-md sm:text-lg font-bold text-gray-300 group-hover:text-white transition-colors truncate" title={nextEntry.data.title}>{nextEntry.data.title} &rarr;</span>
+                    </a>
+                )}
+            </div>
+        </nav>
+
+        <!-- ═══ SEO FEATURED SNIPPET BAIT ═══ -->
+        {hints.length > 0 && (
+            <section class="mt-12 pt-8 border-t border-gray-800/50">
+                <h2 class="text-lg font-bold text-gray-400 mb-4">Strands Hints Today & Answer Categories</h2>
+                <ul class="space-y-2">
+                    {hints.map(hint => (
+                        <li class="flex items-center gap-3 text-sm">
+                            <span class="inline-block px-2 py-0.5 rounded text-xs font-bold bg-blue-900 text-blue-200">{hint.level}</span>
+                            <span class="text-gray-500">{hint.description}</span>
+                        </li>
+                    ))}
+                </ul>
+                <p class="mt-4 text-xs text-gray-600">Use the progressive hint panels above to solve today's puzzle without spoiling all the answers at once.</p>
+            </section>
+        )}
+    </main>
+
+    <Footer />
+</Layout>

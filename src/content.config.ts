@@ -31,4 +31,14 @@ const pips = defineCollection({
   })
 });
 
-export const collections = { connections, pips };
+const wordle = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/wordle" }),
+  schema: pips.schema,
+});
+
+const strands = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/strands" }),
+  schema: pips.schema,
+});
+
+export const collections = { connections, pips, wordle, strands };

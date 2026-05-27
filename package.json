@@ -10,7 +10,11 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "generate:content": "node scripts/content-generator/auto-fetch-generate.js"
+    "generate:content": "node scripts/content-generator/auto-fetch-generate.js",
+    "generate:wordle": "node scripts/content-generator/wordle-auto-fetch-generate.js",
+    "generate:strands": "node scripts/content-generator/strands-auto-fetch-generate.js",
+    "generate:pips": "node scripts/content-generator/pips-auto-fetch-generate.js",
+    "generate:all": "npm run generate:content && npm run generate:wordle && npm run generate:strands && npm run generate:pips"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
