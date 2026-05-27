@@ -166,16 +166,7 @@ async function main() {
             const colors = ['Yellow', 'Green', 'Blue', 'Purple'];
             rawData.categories.forEach((cat, index) => {
                 const color = colors[index];
-                const words = cat.cards.map(c => c.content);
-                let displayWords = '';
-                if (index === 0) { // Yellow: show 2 words
-                    displayWords = `${words[0]}, ${words[1]}, ... (Click below to reveal)`;
-                } else if (index === 1) { // Green: show 1 word
-                    displayWords = `${words[0]}, ... (Click below to reveal)`;
-                } else { // Blue, Purple: show none
-                    displayWords = `... (Click below to reveal)`;
-                }
-                snippetBaitHTML += `        <li><strong>${color}:</strong> ${displayWords}</li>\n`;
+                snippetBaitHTML += `        <li><strong>${color}:</strong> ... (Click below to reveal)</li>\n`;
             });
         }
         snippetBaitHTML += `    </ul>\n</div>\n`;
