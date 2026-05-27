@@ -37,9 +37,9 @@ async function generateAIContent(rawData, dateString) {
     let promptData = `Date: ${dateString}\n`;
     if (rawData && rawData.categories) {
         const colors = ['Yellow', 'Green', 'Blue', 'Purple'];
-        rawData.categories.forEach(cat => {
+        rawData.categories.forEach((cat, index) => {
             const words = cat.cards.map(c => c.content).join(', ');
-            const color = colors[cat.level];
+            const color = colors[index];
             promptData += `${color}: [${words}] - ${cat.title}\n`;
         });
     } else {
@@ -120,10 +120,15 @@ async function main() {
             throw new Error("GEMINI_API_KEY is missing in environment variables.");
         }
 
-        // Get tomorrow's date to fetch ahead of time (Timezone Arbitrage)
-        const date = new Date();
-        date.setDate(date.getDate() + 1);
-        const dateString = date.toISOString().split('T')[0];
+        // Get tomorrow's date by default, or use arg
+        let dateString;
+        if (process.argv[2]) {
+            dateString = process.argv[2];
+        } else {
+            const date = new Date();
+            date.setDate(date.getDate() + 1);
+            dateString = date.toISOString().split('T')[0];
+        }
 
         // 1. Fetch Data
         const rawData = await fetchNYTConnections(dateString);
@@ -159,14 +164,13 @@ async function main() {
 `;
         if (rawData && rawData.categories) {
             const colors = ['Yellow', 'Green', 'Blue', 'Purple'];
-            const sortedCats = [...rawData.categories].sort((a, b) => a.level - b.level);
-            sortedCats.forEach(cat => {
-                const color = colors[cat.level];
+            rawData.categories.forEach((cat, index) => {
+                const color = colors[index];
                 const words = cat.cards.map(c => c.content);
                 let displayWords = '';
-                if (cat.level === 0) { // Yellow: show 2 words
+                if (index === 0) { // Yellow: show 2 words
                     displayWords = `${words[0]}, ${words[1]}, ... (Click below to reveal)`;
-                } else if (cat.level === 1) { // Green: show 1 word
+                } else if (index === 1) { // Green: show 1 word
                     displayWords = `${words[0]}, ... (Click below to reveal)`;
                 } else { // Blue, Purple: show none
                     displayWords = `... (Click below to reveal)`;
