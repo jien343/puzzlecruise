@@ -47,6 +47,14 @@ IMPORTANT INSTRUCTION: Your ENTIRE output MUST be strictly in English. Do NOT ou
 - BANNED PHRASES: Do not use robotic transitions ("Firstly", "Secondly") or generic intros/outros.
 - Humanization: Be concise. Use short sentences. 
 
+### SEO Keyword Injection (MANDATORY BUT MUST BE NATURAL)
+You should try to weave 1 or 2 (NOT ALL) of the following phrases into your conversational hints:
+- "NYT Strands hints today"
+- "Strands solver"
+- "Strands answer today"
+- "today's Strands solution"
+WARNING: DO NOT keyword stuff. Google penalizes robotic keyword stuffing. Pick a maximum of 2 phrases and spread them out organically so they sound like natural gamer chatter (e.g. "If you're looking for the full Strands answer today, this first hint is..."). If it feels forced, leave it out.
+
 ### The Stages (CRITICAL SEO REQUIREMENT)
 You must generate exactly 3 progressive hints for the Strands puzzle.
 Write 2-3 natural-sounding, fluff-free sentences for each hint.

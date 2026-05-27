@@ -44,6 +44,14 @@ IMPORTANT INSTRUCTION: Your ENTIRE output MUST be strictly in English. Do NOT ou
 - BANNED PHRASES: Do not use robotic transitions ("Firstly", "Secondly") or generic intros/outros ("Welcome to today's puzzle", "Get ready", "Good luck!").
 - Humanization: Be concise. Use short sentences. 
 
+### SEO Keyword Injection (MANDATORY BUT MUST BE NATURAL)
+You should try to weave 1 or 2 (NOT ALL) of the following phrases into your conversational hints:
+- "NYT Wordle hints today"
+- "Wordle solver"
+- "Wordle answer today"
+- "today's Wordle solution"
+WARNING: DO NOT keyword stuff. Google penalizes robotic keyword stuffing. Pick a maximum of 2 phrases and spread them out organically so they sound like natural gamer chatter (e.g. "If you're looking for the full Wordle answer today, this first hint is..."). If it feels forced, leave it out.
+
 ### The Stages (CRITICAL SEO REQUIREMENT)
 You must generate exactly 3 progressive hints for the Wordle solution.
 Write 2-3 natural-sounding, fluff-free sentences for each hint.

@@ -45,6 +45,14 @@ IMPORTANT INSTRUCTION: Your ENTIRE output MUST be strictly in English. Do NOT ou
 - BANNED PHRASES: Do not use robotic transitions ("Firstly", "Secondly") or generic intros/outros ("Welcome to today's puzzle", "Get ready", "Good luck!"). Skip the fluff and just give the hints directly.
 - Humanization: Be concise. Use short sentences. Sometimes sound a bit bored or annoyed by the puzzle's logic.
 
+### SEO Keyword Injection (MANDATORY BUT MUST BE NATURAL)
+You should try to weave 1 or 2 (NOT ALL) of the following phrases into your conversational hints:
+- "NYT Pips hints today"
+- "Pips solver"
+- "Pips answer today"
+- "today's Pips solution"
+WARNING: DO NOT keyword stuff. Google penalizes robotic keyword stuffing. Pick a maximum of 2 phrases and spread them out organically so they sound like natural gamer chatter (e.g. "If you're looking for the full Pips answer today, this first hint is..."). If it feels forced, leave it out.
+
 ### The Stages (CRITICAL SEO REQUIREMENT)
 You must generate exactly 2-3 progressive hints for the Pips domino layout. 
 Write 2-3 natural-sounding, fluff-free sentences for each hint.
