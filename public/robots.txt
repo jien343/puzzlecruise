@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://puzzlecruise.com/sitemap-index.xml
+Sitemap: https://puzzlecruise.live/sitemap-index.xml

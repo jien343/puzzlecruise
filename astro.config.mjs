@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://puzzlecruise.com',
+  site: 'https://puzzlecruise.live',
   vite: {
     plugins: [tailwindcss()]
   },

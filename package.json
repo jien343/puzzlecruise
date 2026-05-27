@@ -13,7 +13,7 @@
     "generate:content": "node scripts/content-generator/auto-fetch-generate.js"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.2",
+    "@astrojs/sitemap": "^3.7.3",
     "@google/generative-ai": "^0.24.1",
     "@tailwindcss/vite": "^4.3.0",
     "astro": "^6.3.7",
