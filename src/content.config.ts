@@ -23,6 +23,11 @@ const pips = defineCollection({
     title: z.string(),
     date: z.date(),
     game: z.string().default('pips'),
+    // Structured hints for SEO snippet bait and JSON-LD
+    hints: z.array(z.object({
+      level: z.string(),
+      description: z.string(),
+    })).optional(),
   })
 });
 
