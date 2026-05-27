@@ -64,13 +64,13 @@ To ensure we have enough engaging text for SEO, write 3-4 natural-sounding, fluf
 - Stage 2 (Synonym/Example Hint): Give the starting letter of one word, or a strong synonym for one of the words, wrapping it in straightforward commentary.
 - Stage 3 (Final Answer): The exact category name and the 4 words.
 
-### SEO Keyword Injection (MANDATORY)
-You MUST naturally weave the following exact phrases into your conversational hints (especially in the Stage 1 hints):
+### SEO Keyword Injection (MANDATORY BUT MUST BE NATURAL)
+You should try to weave 1 or 2 (NOT ALL) of the following exact phrases into your conversational hints (especially in the Stage 1 hints):
 - "NYT Connections hints today"
 - "Connections solver"
 - "Connections answer today"
 - "today's Connections solution"
-Do not put them all in one place. Spread them out across the different color groups organically so they sound like natural gamer chatter (e.g. "If you're looking for the full Connections answer today, this yellow group is basically...").
+WARNING: DO NOT keyword stuff. Google penalizes robotic keyword stuffing. Pick a maximum of 2 phrases and spread them out across the different color groups organically so they sound like natural gamer chatter (e.g. "If you're looking for the full Connections answer today, this yellow group is basically..."). If it feels forced, leave it out.
 
 Use EXACTLY this HTML format for EACH color (change background colors appropriately: Yellow: bg-yellow-400, Green: bg-green-400, Blue: bg-blue-400, Purple: bg-purple-400):
 
