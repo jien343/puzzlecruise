@@ -1,0 +1,15 @@
+exclude:
+  - src/
+  - node_modules/
+  - scripts/
+  - public/
+  - package.json
+  - package-lock.json
+  - astro.config.mjs
+  - tsconfig.json
+  - wrangler.toml
+  - .env
+  - .env.example
+  - temp_update.js
+  - temp_index.astro.old
+  - scratch_nyt.json
